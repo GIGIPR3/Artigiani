@@ -1,31 +1,52 @@
 <div class="contenitore nunito">
-  <form action="">
+  <form [formGroup]="userForm" (ngSubmit)="save()">
     <div class="d-flex">
-      <div class="black-side d-flex flex-column align-items-center justify-content-center gap-4">
+      <div
+        class="black-side d-flex flex-column align-items-center justify-content-center gap-4"
+      >
+        <div class="text-white koulen back" routerLink="">< back</div>
 
-        <div class="text-white koulen back" routerLink="">
-          < back
+        <div class="d-flex flex-column">
+          <label for="email" class="text-light">Email</label>
+          <input type="text" id="email" formControlName="email" />
+          <!-- Display validation error message for email -->
+          <div
+            *ngIf="
+              userForm.get('email')!.invalid && userForm.get('email')!.touched
+            "
+            class="text-danger"
+          >
+            Email is required and must be a valid email address.
+          </div>
         </div>
 
         <div class="d-flex flex-column">
-          <label for="" class="text-light">Email</label>
-          <input type="text">
+          <label for="password" class="text-light">Password</label>
+          <input type="password" id="password" formControlName="password" />
+          <!-- Display validation error message for password -->
+          <div
+            *ngIf="
+              userForm.get('password')!.invalid &&
+              userForm.get('password')!.touched
+            "
+            class="text-danger"
+          >
+            Password is required.
+          </div>
         </div>
-        <div class="d-flex flex-column">
-          <label for="" class="text-light">Password</label>
-          <input type="text">
-        </div>
+
         <div class="text-light mt-3">
-          <div>Hai gia un account?<span routerLink="/login" class="pointer"> Accedi</span></div>
+          <div>
+            Hai gia un account?<span routerLink="/login" class="pointer">
+              Accedi</span
+            >
+          </div>
         </div>
-
       </div>
-      <div class="white-side">
-        <button class="koulen">
-          <span class="box">
-            Registrati
-          </span>
 
+      <div class="white-side">
+        <button type="submit" class="koulen" [disabled]="userForm.invalid">
+          <span class="box">Registrati</span>
         </button>
       </div>
     </div>
