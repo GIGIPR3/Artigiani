@@ -48,8 +48,9 @@ export class LoginComponent implements OnInit {
             )
             .subscribe({
               next: (res: User) => {
-                this.logauth.user = res;
+                this.logauth.user = res;  
                 this.logauth.updateCookies();
+                this.router.navigate(['/admin'])
               },
               error: (error) => {
                 console.error('Error:', error);

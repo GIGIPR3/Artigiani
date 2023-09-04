@@ -9,14 +9,14 @@ import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { RegistratiComponent } from './registrati/registrati.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomepageComponent },
+  { path: '', component: HomepageComponent },
 
   {
     path: 'registrati',
     component: RegistratiComponent,
   },
   {
-    path: '',
+    path: 'login',
     component: LoginComponent,
   },
   {
