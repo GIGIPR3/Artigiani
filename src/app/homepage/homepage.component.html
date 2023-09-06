@@ -1,66 +1,30 @@
 <div class="sfondo text-light">
-
   <div class="">
     <nav class="d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center gap-5">
-        <div class="pointer" routerLink="marketplace">
-          ACQUISTA
-        </div>
-        <div routerLink="login" class="pointer">
+        <div class="pointer" routerLink="marketplace">ACQUISTA</div>
+        <div *ngIf="user?.role === 'admin'" routerLink="login" class="pointer">
           VENDI
         </div>
       </div>
-
       <div class="titolo">
-        <div>
-          ARTIGIANI
-        </div>
-        <div>
-          ARTIGIANI
-        </div>
-        <div>
-          ARTIGIANI
-        </div>
-        <div>
-          ARTIGIANI
-        </div>
-        <div>
-          ARTIGIANI
-        </div>
-        <div>
-          ARTIGIANI
-        </div>
+        <div *ngFor="let i of generateArtigianiArray(12)">ARTIGIANI</div>
       </div>
 
       <div class="d-flex align-items-center gap-5">
-        <div routerLink="registrati" class="pointer">
+        <div *ngIf="user" class="pointer bottone-white text-dark">
+          {{ user.email }}
+        </div>
+        <div *ngIf="!user" routerLink="registrati" class="pointer">
           REGISTRATI
         </div>
-        <div>
-          <button class="bottone-white" routerLink="login">
-            LOG IN
-          </button>
+        <div *ngIf="user">
+          <button class="bottone-white" (click)="logout()">LOGOUT</button>
+        </div>
+        <div *ngIf="!user">
+          <button class="bottone-white" routerLink="login">LOG IN</button>
         </div>
       </div>
     </nav>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   </div>
-
-
-
-
-
 </div>
