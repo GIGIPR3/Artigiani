@@ -47,7 +47,7 @@ export class RegistratiComponent {
           next: (res: any) => {
             this.logauth.user = res;
             this.logauth.updateCookies();
-            if (this.logauth.user.role === 'admin') {
+            if (this.logauth.user!.role === 'admin') {
               this.router.navigate(['/admin']);
             } else {
               this.router.navigate(['/marketplace']);

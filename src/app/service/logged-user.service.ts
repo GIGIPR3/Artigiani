@@ -1,14 +1,15 @@
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { User } from '../interfaces/user';
-import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoggedUserService {
-  constructor(private cookieService: CookieService) {}
+  constructor(private cookieService: CookieService, private router: Router) {}
 
-  user!: User;
+  user: User | null = null;
 
   updateCookies() {
     this.cookieService.deleteAll();
@@ -19,5 +20,9 @@ export class LoggedUserService {
     return this.cookieService.get('user');
   }
 
-  
+  logout() {
+    this.cookieService.deleteAll();
+    this.user = null;
+    this.router.navigate(['/login']);
+  }
 }

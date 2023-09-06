@@ -1,22 +1,17 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, TemplateRef } from '@angular/core';
+import { Component } from '@angular/core';
 /* import { ServizioService } from '../service/servizio.service'; */
 import { User } from '../interfaces/user';
 import { LoggedUserService } from '../service/logged-user.service';
 
-
-
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+  styleUrls: ['./admin.component.css'],
 })
 export class AdminComponent {
+  user: User | null = this.http.user;
 
-  user: User = this.http.user
-
-  constructor(private http: LoggedUserService) {this.http.getUser()}
-
-  
-
+  constructor(private http: LoggedUserService) {
+    this.http.getUser();
+  }
 }
