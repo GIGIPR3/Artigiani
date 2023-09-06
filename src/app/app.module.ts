@@ -14,6 +14,7 @@ import { RegistratiComponent } from './registrati/registrati.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarrelloComponent } from './carrello/carrello.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

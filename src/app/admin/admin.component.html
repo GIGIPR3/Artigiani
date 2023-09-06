@@ -1,59 +1,69 @@
-<div class="koulen container">
-
+<div class="koulen container oscura">
   <nav class="d-flex align-items-center justify-content-between pt-5">
-    <div class="saluti">
-      <span>👋</span>Ciao artigiano {{ user.email }}
-    </div>
+    <div class="saluti"><span>👋</span>Ciao artigiano {{ user.email }}</div>
 
     <div class="icona">
       <i class="fa-solid fa-circle-user"></i>
     </div>
   </nav>
+
   <div class="d-flex align-items-center justify-content-between mt-4">
-    <button class="koulen" routerLink="">
-      < Back
-    </button>
+    <button class="koulen" routerLink="">< Back</button>
 
-    <button class="koulen">
-      + Add product
-    </button>
+    <button class="koulen" (click)="visualizzaModale()">+ Add product</button>
 
+    <div *ngIf="modaleVisibile">
+      <form action="" class="form">
+        <div class="modale nunito">
+          <div
+            class="immagine1 m-auto d-flex align-items-center justify-content-center"
+          >
+            <input type="file" name="" id="" />
+          </div>
 
+          <div class="mt-5">
+            <input
+              type="text"
+              placeholder="Titolo del Prodotto"
+              class="titolo"
+            />
+          </div>
 
+          <div class="mt-5 d-flex justify-content-end">
+            <input type="text" class="prezzo" placeholder="Prezzo" />
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mt-4 gap-4">
+          <button type="submit" class="bottoni-modale">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+          </button>
+          <button class="bottoni-modale" (click)="visualizzaModale()">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 
-
-
   <main class="mt-5">
-    <div class="cards d-flex align-items-center justify-content-between ps-3 pe-3 mt-3 mb-3">
-
+    <div
+      class="cards d-flex align-items-center justify-content-between ps-3 pe-3 mt-3 mb-3"
+    >
       <div class="d-flex align-items-center gap-4 fs-4">
-        <div class="immagine"><img src="" alt=""></div>
+        <div class="immagine"><img src="" alt="" /></div>
         <div class="nunito">Titolo del Prodotto</div>
       </div>
 
       <div>
-        <div class="nunito nunito-bold fs-2">
-          $10,00
-        </div>
+        <div class="nunito nunito-bold fs-2">$10,00</div>
 
         <div class="koulen d-flex justify-content-end align-items-center pe-3">
           <div>
             <i class="fa-solid fa-pencil"></i>
           </div>
-          <div class="bottone-modifica ps-1">
-            modifica
-          </div>
+          <div class="bottone-modifica ps-1">modifica</div>
         </div>
       </div>
-
     </div>
   </main>
-
-
-
-
-
-
-
 </div>
