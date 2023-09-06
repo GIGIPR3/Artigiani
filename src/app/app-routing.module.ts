@@ -7,6 +7,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { LoginComponent } from './login/login.component';
 import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { RegistratiComponent } from './registrati/registrati.component';
+import { CarrelloComponent } from './carrello/carrello.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -28,6 +29,10 @@ const routes: Routes = [
     canActivate: [authGuardFn()],
     component: AdminComponent,
   },
+  {
+    path: 'carrello',
+    component: CarrelloComponent
+  }
 ];
 
 @NgModule({

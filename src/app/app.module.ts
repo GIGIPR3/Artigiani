@@ -11,6 +11,8 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { LoginComponent } from './login/login.component';
 import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { RegistratiComponent } from './registrati/registrati.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CarrelloComponent } from './carrello/carrello.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { RegistratiComponent } from './registrati/registrati.component';
     LoginComponent,
     MarketplaceComponent,
     AdminComponent,
+    CarrelloComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,6 +30,7 @@ import { RegistratiComponent } from './registrati/registrati.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgbModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],

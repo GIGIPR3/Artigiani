@@ -1,4 +1,10 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, TemplateRef } from '@angular/core';
+/* import { ServizioService } from '../service/servizio.service'; */
+import { User } from '../interfaces/user';
+import { LoggedUserService } from '../service/logged-user.service';
+
+
 
 @Component({
   selector: 'app-admin',
@@ -6,5 +12,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent {
+
+  user: User = this.http.user
+
+  constructor(private http: LoggedUserService) {this.http.getUser()}
+
+  
 
 }

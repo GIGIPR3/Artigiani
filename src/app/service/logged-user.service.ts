@@ -18,4 +18,6 @@ export class LoggedUserService {
   getUser() {
     return this.cookieService.get('user');
   }
+
+  
 }
