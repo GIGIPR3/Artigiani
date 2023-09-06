@@ -9,11 +9,8 @@ import { LoggedUserService } from '../service/logged-user.service';
   styleUrls: ['./admin.component.css'],
 })
 export class AdminComponent {
-  
+
   user: User | null = this.http.user;
-
-
- /*  user: User = this.http.user */
 
   constructor(private http: LoggedUserService) {this.http.getUser()}
 
