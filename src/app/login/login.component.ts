@@ -11,7 +11,7 @@ import { LoggedUserService } from '../service/logged-user.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  loginForm!: FormGroup; // Define a FormGroup
+  loginForm!: FormGroup;
   email: string = '';
   password: string = '';
 
@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Initialize the FormGroup with form controls and validators
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -48,9 +47,13 @@ export class LoginComponent implements OnInit {
             )
             .subscribe({
               next: (res: User) => {
-                this.logauth.user = res;  
+                this.logauth.user = res;
                 this.logauth.updateCookies();
-                this.router.navigate(['/admin'])
+                if (this.logauth.user.role === 'admin') {
+                  this.router.navigate(['/admin']);
+                } else {
+                  this.router.navigate(['/marketplace']);
+                }
               },
               error: (error) => {
                 console.error('Error:', error);
