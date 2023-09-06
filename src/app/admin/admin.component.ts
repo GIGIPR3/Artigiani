@@ -17,19 +17,6 @@ export class AdminComponent {
 
   constructor(private http: LoggedUserService) {this.http.getUser()}
 
-  /* modaleVisible = false;
-
-  myModale: HTMLCollectionOf<Element> = document.getElementsByClassName("form");
-
-  visualizzaModale(){
-    addEventListener("click", () => {
-      this.modaleVisible = !this.modaleVisible
-      if (this.modaleVisible) {
-        this.myModale.classList.remove("disabilita")
-        this.myModale.classList.add("attiva")
-      }
-    })
-  } */
 
   modaleVisibile = false;
 
