@@ -1,36 +1,96 @@
-<div class="koulen container">
+<div class="koulen container oscura">
   <nav class="d-flex align-items-center justify-content-between pt-5">
     <div class="saluti"><span>👋</span>Ciao artigiano {{ user!.email }}</div>
-
     <div class="icona">
       <i class="fa-solid fa-circle-user"></i>
     </div>
   </nav>
-  <div class="d-flex align-items-center justify-content-between mt-4">
+
+  <div class="mt-4">
     <button class="koulen" routerLink="">< Back</button>
 
-    <button class="koulen">+ Add product</button>
+    <button class="koulen" (click)="visualizzaModale()">+ Add product</button>
+    <app-create-category></app-create-category>
+
+    <div *ngIf="modaleVisibile" class="form">
+      <form
+        [formGroup]="productForm"
+        (ngSubmit)="onSubmit()"
+        enctype="multipart/form-data"
+      >
+        <div class="modale nunito">
+          <input
+            type="file"
+            #filePicker
+            (change)="onImagePicked($event)"
+            accept="image/*"
+          />
+          <img
+            [src]="selectedImage"
+            alt="Selected Image"
+            *ngIf="selectedImage"
+          />
+          <div class="mt-5">
+            <input
+              type="text"
+              placeholder="Titolo del Prodotto"
+              class="titolo"
+              formControlName="name"
+            />
+            <input
+              type="text"
+              placeholder="Descrizione del Prodotto"
+              class="description"
+              formControlName="description"
+            />
+          </div>
+          <div class="mt-5 d-flex justify-content-end">
+            <input
+              type="text"
+              class="prezzo"
+              placeholder="Prezzo"
+              formControlName="price"
+            />
+          </div>
+          <div class="mt-5">
+            <div
+              *ngFor="let category of categories; let i = index"
+              class="col-md-2 text-white"
+            >
+              <label>
+                <input
+                  type="checkbox"
+                  [value]="category.categoryId"
+                  (change)="onCheckChange($event)"
+                />
+                {{ category.name }}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mt-4 gap-4">
+          <button type="submit" class="bottoni-modale">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Submit
+          </button>
+          <button
+            type="button"
+            class="bottoni-modale"
+            (click)="visualizzaModale()"
+          >
+            <i class="fa-solid fa-xmark"></i> Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="card-container">
+      <app-product-card
+        *ngFor="let product of products"
+        [productData]="product"
+      ></app-product-card>
+    </div>
   </div>
 
   <main class="mt-5">
-    <div
-      class="cards d-flex align-items-center justify-content-between ps-3 pe-3 mt-3 mb-3"
-    >
-      <div class="d-flex align-items-center gap-4 fs-4">
-        <div class="immagine"><img src="" alt="" /></div>
-        <div class="nunito">Titolo del Prodotto</div>
-      </div>
-
-      <div>
-        <div class="nunito nunito-bold fs-2">$10,00</div>
-
-        <div class="koulen d-flex justify-content-end align-items-center pe-3">
-          <div>
-            <i class="fa-solid fa-pencil"></i>
-          </div>
-          <div class="bottone-modifica ps-1">modifica</div>
-        </div>
-      </div>
-    </div>
+    <!-- Your product display area goes here -->
   </main>
 </div>
