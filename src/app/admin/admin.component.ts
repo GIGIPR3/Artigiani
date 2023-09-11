@@ -36,7 +36,7 @@ export class AdminComponent implements OnInit {
       categoryId: new FormArray([]),
       images: this.formBuilder.array([]),
       description: [''],
-      userid: [''],
+      userId: [''],
     });
     this.http
       .get<string[]>('http://localhost:5000/api/categories')
@@ -45,6 +45,7 @@ export class AdminComponent implements OnInit {
         this.categories = data;
       });
   }
+
   ngOnInit(): void {
     const userJson = this.loggedUser.getUser();
     console.log(userJson);
@@ -60,7 +61,7 @@ export class AdminComponent implements OnInit {
       this.user = JSON.parse(userJson);
       console.log('User data:', this.user);
 
-      this.productService.getProductsByUserId(this.user!.userid).subscribe(
+      this.productService.getProductsByUserId(this.user!.userId).subscribe(
         (response) => {
           this.products = response;
           console.log('Products by user:', this.products);
@@ -83,7 +84,7 @@ export class AdminComponent implements OnInit {
     if (this.productForm.invalid) {
       return;
     }
-    this.productForm.get('userid')?.setValue(this.user?.userid);
+    this.productForm.get('userId')?.setValue(this.user?.userId);
     this.productService.postProduct(this.productForm.value).subscribe(
       (response) => {
         console.log('Product posted successfully', response);
