@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   Login() {
     console.log(this.loginForm.value.email);
     this.http
-      .post('http://localhost:8080/api/user/login', this.loginForm.value)
+      .post('http://localhost:5000/api/user/login', this.loginForm.value)
       .subscribe((resultData: any) => {
         console.log(resultData);
 
@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
           console.log(resultData);
           this.http
             .get<User>(
-              `http://localhost:8080/api/user/getByEmail/${this.loginForm.value.email}`
+              `http://localhost:5000/api/user/getByEmail/${this.loginForm.value.email}`
             )
             .subscribe({
               next: (res: User) => {
