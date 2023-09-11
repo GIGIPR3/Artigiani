@@ -1,0 +1,16 @@
+<div class="card">
+  <div class="image-thumbnails">
+    <img
+      *ngFor="let image of productData.images; let i = index"
+      [src]="'data:image/jpeg;base64,' + image.imageData"
+      alt="Product Image"
+      (click)="showImage(i)"
+    />
+  </div>
+
+  <h2>{{ productData.name }}</h2>
+  <p>Description: {{ productData.description }}</p>
+  <p>Price: ${{ productData.price }}</p>
+  <p>Created At: {{ productData.createdAt }}</p>
+  <p>Updated At: {{ productData.updatedAt }}</p>
+</div>
