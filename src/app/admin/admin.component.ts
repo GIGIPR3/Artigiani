@@ -60,14 +60,12 @@ export class AdminComponent implements OnInit {
       this.user = JSON.parse(userJson);
       console.log('User data:', this.user);
 
-      // Fetch products by user ID and assign them to the 'products' array
       this.productService.getProductsByUserId(this.user!.userid).subscribe(
         (response) => {
           this.products = response;
           console.log('Products by user:', this.products);
         },
         (error) => {
-          // Handle errors here
           console.error('Error retrieving products by user:', error);
         }
       );
@@ -88,11 +86,9 @@ export class AdminComponent implements OnInit {
     this.productForm.get('userid')?.setValue(this.user?.userid);
     this.productService.postProduct(this.productForm.value).subscribe(
       (response) => {
-        // Handle success response
         console.log('Product posted successfully', response);
       },
       (error) => {
-        // Handle error
         console.error('Error posting product', error);
       }
     );
