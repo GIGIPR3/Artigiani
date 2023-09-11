@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:5000/api';
+  private apiUrl = 'http://localhost:5000/api/products';
 
   constructor(private http: HttpClient) {}
 
@@ -16,15 +16,19 @@ export class ProductService {
     });
 
     return this.http.post<any>(
-      `${this.apiUrl}/products`,
+      `${this.apiUrl}`,
       JSON.stringify(productData),
       { headers } // Pass the headers as an option
     );
   }
 
   getProductsByUserId(userId: string): Observable<any> {
-    const url = `${this.apiUrl}/products/${userId}`;
+    const url = `${this.apiUrl}/${userId}`;
 
     return this.http.get<any>(url);
+  }
+
+  getAllProducts() {
+    return this.http.get<any>(this.apiUrl);
   }
 }
