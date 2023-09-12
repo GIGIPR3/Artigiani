@@ -13,4 +13,7 @@
   <p>Price: ${{ productData.price }}</p>
   <p>Created At: {{ productData.createdAt }}</p>
   <p>Updated At: {{ productData.updatedAt }}</p>
+  <button *ngIf="isRouterPageAdmin()" (click)="onDelete(productData.productId)">
+    Delete
+  </button>
 </div>

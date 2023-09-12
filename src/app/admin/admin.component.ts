@@ -52,24 +52,20 @@ export class AdminComponent implements OnInit {
 
     if (userJson) {
       this.user = JSON.parse(userJson);
-      console.log('User data:', this.user);
     } else {
       console.log('User data not found in cookies');
     }
 
     if (userJson) {
-      this.user = JSON.parse(userJson);
-      console.log('User data:', this.user);
-
-      this.productService.getProductsByUserId(this.user!.userId).subscribe(
-        (response) => {
+      this.productService.getProductsByUserId(this.user!.userId).subscribe({
+        next: (response) => {
           this.products = response;
           console.log('Products by user:', this.products);
         },
-        (error) => {
+        error: (error) => {
           console.error('Error retrieving products by user:', error);
-        }
-      );
+        },
+      });
     } else {
       console.log('User data not found in cookies');
     }
@@ -85,14 +81,14 @@ export class AdminComponent implements OnInit {
       return;
     }
     this.productForm.get('userId')?.setValue(this.user?.userId);
-    this.productService.postProduct(this.productForm.value).subscribe(
-      (response) => {
+    this.productService.postProduct(this.productForm.value).subscribe({
+      next: (response) => {
         console.log('Product posted successfully', response);
       },
-      (error) => {
+      error: (error) => {
         console.error('Error posting product', error);
-      }
-    );
+      },
+    });
     console.log(this.productForm.value);
   }
 
@@ -107,20 +103,18 @@ export class AdminComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = (e: any) => {
         const imagesArray = this.productForm.get('images') as FormArray;
+        imagesArray.clear();
         imagesArray.push(
           this.formBuilder.control(e.target.result.split(',')[1])
         );
-        this.selectedImage = e.target.result;
-
         this.selectedImage = e.target.result;
       };
 
       reader.readAsDataURL(file);
     } else {
       this.selectedImage = null;
-      this.productForm.patchValue({
-        images: null,
-      });
+      const imagesArray = this.productForm.get('images') as FormArray;
+      imagesArray.clear();
     }
   }
 

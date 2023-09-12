@@ -7,19 +7,18 @@ import { Observable } from 'rxjs';
 })
 export class ProductService {
   private apiUrl = 'http://localhost:5000/api/products';
+  private deleteApiUrl = 'http://localhost:5000/api/product';
 
   constructor(private http: HttpClient) {}
 
   postProduct(productData: any): Observable<any> {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json', // Set the Content-Type to application/json
+      'Content-Type': 'application/json',
     });
 
-    return this.http.post<any>(
-      `${this.apiUrl}`,
-      JSON.stringify(productData),
-      { headers } // Pass the headers as an option
-    );
+    return this.http.post<any>(`${this.apiUrl}`, JSON.stringify(productData), {
+      headers,
+    });
   }
 
   getProductsByUserId(userId: string): Observable<any> {
@@ -30,5 +29,9 @@ export class ProductService {
 
   getAllProducts() {
     return this.http.get<any>(this.apiUrl);
+  }
+
+  deleteProduct(productId: string) {
+    return this.http.delete<any>(this.deleteApiUrl + '/' + productId);
   }
 }

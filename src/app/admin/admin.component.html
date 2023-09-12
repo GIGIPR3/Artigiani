@@ -13,11 +13,7 @@
     <app-create-category></app-create-category>
 
     <div *ngIf="modaleVisibile" class="form">
-      <form
-        [formGroup]="productForm"
-        (ngSubmit)="onSubmit()"
-        enctype="multipart/form-data"
-      >
+      <form [formGroup]="productForm" enctype="multipart/form-data">
         <div class="modale nunito">
           <input
             type="file"
@@ -69,7 +65,7 @@
           </div>
         </div>
         <div class="d-flex justify-content-center mt-4 gap-4">
-          <button type="submit" class="bottoni-modale">
+          <button type="submit" class="bottoni-modale" (click)="onSubmit()">
             <i class="fa-solid fa-cloud-arrow-up"></i> Submit
           </button>
           <button
