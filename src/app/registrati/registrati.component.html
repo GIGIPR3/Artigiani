@@ -9,7 +9,6 @@
         <div class="d-flex flex-column">
           <label for="email" class="text-light">Email</label>
           <input type="text" id="email" formControlName="email" />
-          <!-- Display validation error message for email -->
           <div
             *ngIf="
               userForm.get('email')!.invalid && userForm.get('email')!.touched
@@ -23,7 +22,6 @@
         <div class="d-flex flex-column">
           <label for="password" class="text-light">Password</label>
           <input type="password" id="password" formControlName="password" />
-          <!-- Display validation error message for password -->
           <div
             *ngIf="
               userForm.get('password')!.invalid &&
