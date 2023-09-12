@@ -1,5 +1,6 @@
 <div class="koulen container oscura">
   <nav class="d-flex align-items-center justify-content-between pt-5">
+    <button class="btn btn-danger" routerLink="">Back</button>
     <div class="saluti"><span>👋</span>Ciao artigiano {{ user!.email }}</div>
     <div class="icona">
       <i class="fa-solid fa-circle-user"></i>
@@ -7,74 +8,76 @@
   </nav>
 
   <div class="mt-4">
-    <button class="koulen" routerLink="">< Back</button>
 
-    <button class="koulen" (click)="visualizzaModale()">+ Add product</button>
-    <app-create-category></app-create-category>
-
-    <div *ngIf="modaleVisibile" class="form">
+    <button class=" btn btn-success mb-2" (click)="visualizzaModale()">+ Add product</button>
+    
+    <div *ngIf="modaleVisibile" class="form rounded modale">
+      <app-create-category></app-create-category>
       <form
         [formGroup]="productForm"
         (ngSubmit)="onSubmit()"
         enctype="multipart/form-data"
       >
-        <div class="modale nunito">
-          <input
-            type="file"
-            #filePicker
-            (change)="onImagePicked($event)"
-            accept="image/*"
-          />
-          <img
-            [src]="selectedImage"
-            alt="Selected Image"
-            *ngIf="selectedImage"
-          />
-          <div class="mt-5">
+      <div class="mt-5">
+        <input
+        type="text"
+        placeholder="Titolo del Prodotto"
+        class="titolo"
+        formControlName="name"
+        />
+        <input
+        type="text"
+        placeholder="Descrizione del Prodotto"
+        class="description"
+        formControlName="description"
+        />
+      </div>
+      <div class=" mt-3 nunito">Inserisci immagine: 
+        <br>
+        <input 
+        type="file"
+        #filePicker
+        (change)="onImagePicked($event)"
+        accept="image/*"
+        />
+        <img
+        [src]="selectedImage"
+        alt="Selected Image"
+        *ngIf="selectedImage"
+        />
+        <div class="mt-5 ">Select category:
+          
+          <div
+          *ngFor="let category of categories; let i = index"
+          class="col-md-2 text-white"
+          >
+          <label class="text-dark">
             <input
-              type="text"
-              placeholder="Titolo del Prodotto"
-              class="titolo"
-              formControlName="name"
+            type="checkbox"
+            [value]="category.categoryId"
+            (change)="onCheckChange($event)"
             />
-            <input
-              type="text"
-              placeholder="Descrizione del Prodotto"
-              class="description"
-              formControlName="description"
-            />
-          </div>
-          <div class="mt-5 d-flex justify-content-end">
-            <input
-              type="text"
-              class="prezzo"
-              placeholder="Prezzo"
-              formControlName="price"
-            />
-          </div>
-          <div class="mt-5">
-            <div
-              *ngFor="let category of categories; let i = index"
-              class="col-md-2 text-white"
-            >
-              <label>
-                <input
-                  type="checkbox"
-                  [value]="category.categoryId"
-                  (change)="onCheckChange($event)"
-                />
-                {{ category.name }}
-              </label>
-            </div>
-          </div>
+            {{ category.name }}
+          </label>
         </div>
-        <div class="d-flex justify-content-center mt-4 gap-4">
-          <button type="submit" class="bottoni-modale">
+        <div class="mt-5 d-flex justify-content-end">
+          <label for="">Inserisci prezzo
+          <input
+          type="text"
+          class="prezzo"
+          placeholder="Prezzo"
+          formControlName="price"
+          /></label>
+        </div>
+      </div>
+    </div>
+        <div class="d-flex justify-content-center pb-3 mt-4 gap-4">
+          <button type="submit" class="btn btn-success">
             <i class="fa-solid fa-cloud-arrow-up"></i> Submit
           </button>
           <button
             type="button"
-            class="bottoni-modale"
+            class=" btn btn-danger"
             (click)="visualizzaModale()"
           >
             <i class="fa-solid fa-xmark"></i> Cancel
@@ -82,7 +85,8 @@
         </div>
       </form>
     </div>
-    <div class="card-container">
+    <div class="card-container mt-2 d-flex justify-content-center flex-wrap">
+      <h3 class="text-center my-2">Products</h3>
       <app-product-card
         *ngFor="let product of products"
         [productData]="product"
