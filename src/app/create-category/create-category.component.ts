@@ -14,7 +14,6 @@ export class CreateCategoryComponent {
     private categoryService: CategoryService,
     private formBuilder: FormBuilder
   ) {
-    // Initialize the form in the constructor
     this.categoryForm = this.formBuilder.group({
       name: ['', Validators.required],
     });
@@ -30,6 +29,7 @@ export class CreateCategoryComponent {
           console.error('Error posting category', error);
         }
       );
+      window.location.reload();
     }
   }
 }

@@ -84,6 +84,7 @@ export class AdminComponent implements OnInit {
     this.productService.postProduct(this.productForm.value).subscribe({
       next: (response) => {
         console.log('Product posted successfully', response);
+        window.location.reload();
       },
       error: (error) => {
         console.error('Error posting product', error);

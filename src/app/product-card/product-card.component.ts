@@ -24,5 +24,6 @@ export class ProductCardComponent {
 
   onDelete(productId: string) {
     this.productService.deleteProduct(productId).subscribe();
+    window.location.reload();
   }
 }
