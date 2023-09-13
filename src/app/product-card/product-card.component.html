@@ -31,8 +31,19 @@
   <p>Updated At: {{ productData.updatedAt }}</p>
   <p>rating: {{ productData.productRating.toFixed(1) }}</p>
   <button (click)="getReviews(productData.productId)">Show Reviews</button>
-  <div *ngIf="isRouterPageAdmin(); else nonAdminContent">
-    <button (click)="onDelete(productData.productId)">Delete</button>
+  <div *ngIf="isRouterPageAdmin() || isRoutterPageCart(); else nonAdminContent">
+    <button
+      *ngIf="isRouterPageAdmin()"
+      (click)="onDelete(productData.productId)"
+    >
+      Delete
+    </button>
+    <button
+      *ngIf="isRoutterPageCart()"
+      (click)="onDeleteFromCart(productData.productId)"
+    >
+      Delete
+    </button>
   </div>
   <div *ngIf="showReview">
     <tr *ngFor="let review of reviews">
@@ -53,5 +64,6 @@
         Add Review
       </button>
     </div>
+    <button (click)="addCart(productData.productId)">Add Cart</button>
   </ng-template>
 </div>
