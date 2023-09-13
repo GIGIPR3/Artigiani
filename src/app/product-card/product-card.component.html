@@ -13,7 +13,29 @@
   <p>Price: ${{ productData.price }}</p>
   <p>Created At: {{ productData.createdAt }}</p>
   <p>Updated At: {{ productData.updatedAt }}</p>
-  <button *ngIf="isRouterPageAdmin()" (click)="onDelete(productData.productId)">
-    Delete
-  </button>
+  <p>rating: {{ productData.productRating.toFixed(1) }}</p>
+  <button (click)="getReviews(productData.productId)">Show Reviews</button>
+  <div *ngIf="isRouterPageAdmin(); else nonAdminContent">
+    <button (click)="onDelete(productData.productId)">Delete</button>
+  </div>
+  <div *ngIf="showReview">
+    <tr *ngFor="let review of reviews">
+      <td>{{ review.comment }}</td>
+      <td>{{ review.rating }}</td>
+    </tr>
+  </div>
+
+  <ng-template #nonAdminContent>
+    <div [formGroup]="descriptionForm">
+      <input formControlName="comment" placeholder="Description" />
+      <input
+        formControlName="rating"
+        type="number"
+        placeholder="Rating from 1-10"
+      />
+      <button (click)="addDescription(productData.productId)">
+        Add Review
+      </button>
+    </div>
+  </ng-template>
 </div>
