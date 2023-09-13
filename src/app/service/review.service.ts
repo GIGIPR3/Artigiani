@@ -13,9 +13,7 @@ export class ReviewService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
-
-    console.log(reviewData);
-
+    console.log('entro in addDescription 2');
     return this.http.post<any>(`${this.apiUrl}`, reviewData, {
       headers,
     });
@@ -23,7 +21,6 @@ export class ReviewService {
 
   getReviewsFromProduct(productId: string): Observable<any> {
     const url = `${this.apiUrl}/${productId}`;
-
     return this.http.get<any>(url);
   }
 }
