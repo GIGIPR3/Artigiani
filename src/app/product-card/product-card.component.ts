@@ -57,21 +57,16 @@ export class ProductCardComponent {
   }
 
   addDescription(productId: string) {
-    const description = this.descriptionForm.get('comment')!.value;
+    console.log('entro in addDescription');
+
+    this.descriptionForm.get('comment')!.value;
     const ratingString = this.descriptionForm.get('rating')!.value;
-
     const rating = parseInt(ratingString, 10);
-
     if (isNaN(rating) || rating < 0 || rating > 10) {
       console.error('Rating is not a valid integer between 0 and 10');
       return;
     }
-
     this.descriptionForm.get('productId')!.setValue(productId);
-
-    console.log('ProductId:', productId);
-    console.log('Description:', description);
-    console.log('Rating:', rating);
     console.log('Form Value:', this.descriptionForm.value);
     this.reviewService.postReview(this.descriptionForm.value).subscribe();
   }
