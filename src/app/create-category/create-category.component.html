@@ -1,18 +1,19 @@
 <div>
-  <h2>Create a New Category</h2>
+  <h2 class="text-center">Create a New Category</h2>
   <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="categoryName">Category Name</label>
+      <br>
       <input
         type="text"
         id="categoryName"
         name="categoryName"
         formControlName="name"
-        class="form-control"
+      class="mt-2"
         required
       />
+      <button type="submit" class="btn btn-primary">Create Category</button>
     </div>
 
-    <button type="submit" class="btn btn-primary">Create Category</button>
   </form>
 </div>
