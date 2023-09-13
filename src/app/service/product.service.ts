@@ -34,4 +34,9 @@ export class ProductService {
   deleteProduct(productId: string) {
     return this.http.delete<any>(this.deleteApiUrl + '/' + productId);
   }
+
+  getProductbyId(productId: string): Observable<any> {
+    const url = `http://localhost:5000/api/getProductById/${productId}`;
+    return this.http.get<any>(url);
+  }
 }

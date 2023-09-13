@@ -1,1 +1,4 @@
-<p>carrello works!</p>
+<app-product-card
+  *ngFor="let product of productInCart"
+  [productData]="product"
+></app-product-card>

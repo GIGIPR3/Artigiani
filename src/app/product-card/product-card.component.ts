@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CartService } from '../service/cart.service';
 import { LoggedUserService } from '../service/logged-user.service';
 import { ProductService } from '../service/product.service';
 import { ReviewService } from '../service/review.service';
@@ -22,7 +23,8 @@ export class ProductCardComponent {
     private productService: ProductService,
     private loggedUser: LoggedUserService,
     private formBuilder: FormBuilder,
-    private reviewService: ReviewService
+    private reviewService: ReviewService,
+    private cartService: CartService
   ) {
     const userJson = JSON.parse(this.loggedUser.getUser());
     console.log(userJson);
@@ -51,9 +53,24 @@ export class ProductCardComponent {
     return this.router.url.includes('/admin');
   }
 
+  isRoutterPageCart(): boolean {
+    return this.router.url.includes('/carrello');
+  }
+
   onDelete(productId: string) {
-    this.productService.deleteProduct(productId).subscribe();
-    window.location.reload();
+    this.productService.deleteProduct(productId).subscribe(() => {
+      window.location.reload();
+    });
+  }
+
+  onDeleteFromCart(productId: string) {
+    const productIndex = this.cartService.cart.indexOf(productId);
+    if (productIndex !== -1) {
+      this.cartService.cart.splice(productIndex, 1);
+      console.log('delete product from cookies');
+
+      this.cartService.updateCartCookies();
+    }
   }
 
   addDescription(productId: string) {
@@ -77,5 +94,11 @@ export class ProductCardComponent {
       .getReviewsFromProduct(productId)
       .subscribe((reviews) => (this.reviews = reviews));
     console.log(this.reviews);
+  }
+
+  addCart(product: any) {
+    console.log(product);
+    this.cartService.cart!.push(product);
+    this.cartService.updateCartCookies();
   }
 }
