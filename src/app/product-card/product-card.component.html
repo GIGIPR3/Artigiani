@@ -29,21 +29,30 @@
   <p>Price: ${{ productData.price }}</p>
   <p>Created At: {{ productData.createdAt }}</p>
   <p>Updated At: {{ productData.updatedAt }}</p>
+  <div
+    *ngIf="
+      productData.linkedCategoryId && productData.linkedCategoryId.length > 0
+    "
+  >
+    <p>Categories:</p>
+    <ul>
+      <li *ngFor="let categoryString of productData.linkedCategoryId">
+        {{ categoryString.split("name: ")[1] }}
+      </li>
+    </ul>
+  </div>
   <p>rating: {{ productData.productRating.toFixed(1) }}</p>
   <button (click)="getReviews(productData.productId)">Show Reviews</button>
-  <div *ngIf="isRouterPageAdmin() || isRoutterPageCart(); else nonAdminContent">
+  <div *ngIf="isRouterPageAdmin(); else nonAdminContent">
     <button
       *ngIf="isRouterPageAdmin()"
       (click)="onDelete(productData.productId)"
     >
       Delete
     </button>
-    <button
-      *ngIf="isRoutterPageCart()"
-      (click)="onDeleteFromCart(productData.productId)"
-    >
-      Delete
-    </button>
+  </div>
+  <div *ngIf="isRoutterPageCart()">
+    <button (click)="onDeleteFromCart(productData.productId)">Delete</button>
   </div>
   <div *ngIf="showReview">
     <tr *ngFor="let review of reviews">
