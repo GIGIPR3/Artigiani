@@ -1,7 +1,7 @@
 <div class="koulen container oscura">
-  <nav class="d-flex align-items-center justify-content-between pt-5">
+  <nav class="d-flex align-items-center justify-content-between pt-2">
     <button class="btn btn-danger" routerLink="">Back</button>
-    <div class="saluti"><span>👋</span>Ciao artigiano {{ user!.email }}</div>
+    <div class="saluti fs-3"><span>👋</span>Ciao artigiano {{ user!.email }}</div>
     <div class="icona">
       <i class="fa-solid fa-circle-user"></i>
     </div>
@@ -14,6 +14,7 @@
 
     <div *ngIf="modaleVisibile" class="form rounded modale">
       <app-create-category></app-create-category>
+      <div class="text-center fs-5">Insert new product</div>
       <form
         [formGroup]="productForm"
         (ngSubmit)="onSubmit()"
@@ -92,8 +93,8 @@
         </div>
       </form>
     </div>
-    <div class="card-container mt-2 d-flex justify-content-center flex-wrap">
-      <h3 class="text-center my-2">Products</h3>
+    <div class="products fs-4 d-flex align-items-center justify-content-center my-2">Products</div>
+    <div class="card-container cards mt-2 d-flex justify-content-evenly flex-wrap">
       <app-product-card
         *ngFor="let product of products"
         [productData]="product"

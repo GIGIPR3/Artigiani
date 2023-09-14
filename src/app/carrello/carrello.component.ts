@@ -63,4 +63,7 @@ export class CarrelloComponent implements OnInit {
     console.log(this.order);
     this.orderService.postOrder(this.order).subscribe();
   }
+  deleteProduct(value:string){
+    this.productInCart = this.productInCart.filter(product => product.productId != value)   
+  }
 }

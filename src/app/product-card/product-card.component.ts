@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CartService } from '../service/cart.service';
@@ -13,6 +13,7 @@ import { ReviewService } from '../service/review.service';
 })
 export class ProductCardComponent {
   @Input() productData: any;
+  @Output() deleteCartFromParent = new EventEmitter<string>();
 
   descriptionForm: FormGroup;
   reviews: any[] = [];
@@ -110,5 +111,8 @@ export class ProductCardComponent {
       const [id, name] = categoryString.split(' id: ');
       return { id, name };
     });
+  }
+  parentDelete(value:string){
+    this.deleteCartFromParent.emit(value);
   }
 }

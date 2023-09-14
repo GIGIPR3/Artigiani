@@ -1,3 +1,17 @@
 .modale{
     background-color: beige;
+    padding-top: 10px;
+    width: 75vw;
+    margin: auto;
+}
+.products{
+    margin: auto;
+    background-color: bisque;
+    width: 75vw;
+    height: 50px;
+    border-radius: 10px;
+}
+.cards{
+    width: 75vw;
+    margin: auto;
 }

@@ -1,4 +1,4 @@
-<app-product-card
+<app-product-card (deleteCartFromParent)="deleteProduct($event)"
   *ngFor="let product of productInCart"
   [productData]="product"
 ></app-product-card>
