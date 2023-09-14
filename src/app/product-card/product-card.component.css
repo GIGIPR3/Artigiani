@@ -3,15 +3,23 @@
     width: 35vw;
     padding-inline: 2vw;
     padding-bottom: 2vh; margin-bottom: 10px;
+    min-width: 350px;
+    min-height: 400px;
 }
-button{
-   width: 80px;
-}
+
 img{
     width: 100% !important;
     max-width: 15vw !important;
-    height: 200px !important;
+    min-height: 50px !important;
+    min-width: 70px;
+  
 }
 .s-review{
     width: 150px;
+}
+.buttons1{
+    min-width: 100px;
+}
+.buttons2{
+    min-width: 100px;
 }
