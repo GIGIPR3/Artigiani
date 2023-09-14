@@ -23,6 +23,7 @@ export class AdminComponent implements OnInit {
   file: File | null = null;
   reader = new FileReader();
   products: any[] = [];
+  selectedImages: string[] = [];
 
   constructor(
     private loggedUser: LoggedUserService,
@@ -98,22 +99,29 @@ export class AdminComponent implements OnInit {
 
   onImagePicked(event: Event) {
     const fileInput = event.target as HTMLInputElement;
-    const file = fileInput.files?.[0];
+    const files = fileInput.files;
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        const imagesArray = this.productForm.get('images') as FormArray;
-        imagesArray.clear();
-        imagesArray.push(
-          this.formBuilder.control(e.target.result.split(',')[1])
-        );
-        this.selectedImage = e.target.result;
-      };
+    if (files) {
+      const imagesArray = this.productForm.get('images') as FormArray;
+      imagesArray.clear();
 
-      reader.readAsDataURL(file);
+      this.selectedImages = [];
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          imagesArray.push(
+            this.formBuilder.control(e.target.result.split(',')[1])
+          );
+          this.selectedImages.push(e.target.result);
+        };
+
+        reader.readAsDataURL(file);
+      }
     } else {
-      this.selectedImage = null;
+      this.selectedImages = [];
       const imagesArray = this.productForm.get('images') as FormArray;
       imagesArray.clear();
     }

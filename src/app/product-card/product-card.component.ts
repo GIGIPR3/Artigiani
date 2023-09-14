@@ -65,12 +65,11 @@ export class ProductCardComponent {
 
   onDeleteFromCart(productId: string) {
     const productIndex = this.cartService.cart.indexOf(productId);
-    if (productIndex !== -1) {
-      this.cartService.cart.splice(productIndex, 1);
-      console.log('delete product from cookies');
 
-      this.cartService.updateCartCookies();
-    }
+    this.cartService.cart.splice(productIndex, 1);
+    console.log('delete product from cookies');
+
+    this.cartService.updateCartCookies();
   }
 
   addDescription(productId: string) {
@@ -100,5 +99,16 @@ export class ProductCardComponent {
     console.log(product);
     this.cartService.cart!.push(product);
     this.cartService.updateCartCookies();
+  }
+
+  parseLinkedCategoryId(
+    linkedCategoryId: string
+  ): { id: string; name: string }[] {
+    const categoriesArray = linkedCategoryId.split(' name: ');
+
+    return categoriesArray.map((categoryString) => {
+      const [id, name] = categoryString.split(' id: ');
+      return { id, name };
+    });
   }
 }
