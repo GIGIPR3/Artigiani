@@ -74,10 +74,7 @@ export class AdminComponent implements OnInit {
 
   productForm!: FormGroup;
 
-  submitted = false;
-
   onSubmit() {
-    this.submitted = true;
     if (this.productForm.invalid) {
       return;
     }

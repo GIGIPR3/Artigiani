@@ -44,4 +44,14 @@ export class ProductService {
     const url = `http://localhost:5000/api/nameStartsWith/${productName}`;
     return this.http.get<any>(url);
   }
+
+  patchProduct(productData: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    return this.http.patch<any>(`${this.apiUrl}`, JSON.stringify(productData), {
+      headers,
+    });
+  }
 }

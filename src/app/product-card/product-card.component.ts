@@ -1,5 +1,13 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CartService } from '../service/cart.service';
 import { LoggedUserService } from '../service/logged-user.service';
@@ -11,13 +19,15 @@ import { ReviewService } from '../service/review.service';
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.css'],
 })
-export class ProductCardComponent {
+export class ProductCardComponent implements OnInit {
   @Input() productData: any;
   @Output() deleteCartFromParent = new EventEmitter<string>();
 
   descriptionForm: FormGroup;
   reviews: any[] = [];
   showReview: boolean = false;
+  productForm!: FormGroup;
+  selectedImages: string[] = [];
 
   constructor(
     private router: Router,
@@ -41,6 +51,15 @@ export class ProductCardComponent {
           Validators.max(10),
         ],
       ],
+    });
+  }
+  ngOnInit(): void {
+    this.productForm = this.formBuilder.group({
+      name: [this.productData.name, Validators.required],
+      price: [this.productData.price, [Validators.required, Validators.min(0)]],
+      images: this.formBuilder.array([]),
+      description: [this.productData.description],
+      productId: [''],
     });
   }
 
@@ -112,7 +131,61 @@ export class ProductCardComponent {
       return { id, name };
     });
   }
-  parentDelete(value:string){
+  parentDelete(value: string) {
     this.deleteCartFromParent.emit(value);
+  }
+
+  modaleVisibile = false;
+
+  visualizzaModale() {
+    this.modaleVisibile = !this.modaleVisibile;
+  }
+
+  @ViewChild('filePicker') filePicker!: ElementRef;
+  selectedImage: string | null = null;
+
+  onImagePicked(event: Event) {
+    const fileInput = event.target as HTMLInputElement;
+    const files = fileInput.files;
+
+    if (files) {
+      const imagesArray = this.productForm.get('images') as FormArray;
+      imagesArray.clear();
+
+      this.selectedImages = [];
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          imagesArray.push(
+            this.formBuilder.control(e.target.result.split(',')[1])
+          );
+          this.selectedImages.push(e.target.result);
+        };
+
+        reader.readAsDataURL(file);
+      }
+    } else {
+      this.selectedImages = [];
+      const imagesArray = this.productForm.get('images') as FormArray;
+      imagesArray.clear();
+    }
+  }
+
+  onSubmit(productId: string) {
+    console.log(productId);
+    this.productForm.get('productId')?.setValue(productId);
+    this.productService.patchProduct(this.productForm.value).subscribe({
+      next: (response) => {
+        console.log('Product posted successfully', response);
+        window.location.reload();
+      },
+      error: (error) => {
+        console.error('Error posting product', error);
+      },
+    });
+    console.log(this.productForm.value);
   }
 }
