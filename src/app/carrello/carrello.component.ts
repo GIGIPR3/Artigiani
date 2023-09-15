@@ -13,6 +13,7 @@ import { ProductService } from '../service/product.service';
 })
 export class CarrelloComponent implements OnInit {
   cartItems: any[] | null = [];
+  fullAmount: number | null = null;
 
   user: User | null = this.loggedUserService.user;
   order: Order = {
@@ -49,9 +50,11 @@ export class CarrelloComponent implements OnInit {
       console.log('User data not found in cookies');
     }
     this.cart.forEach((cartItem) =>
-      this.productService
-        .getProductbyId(cartItem)
-        .subscribe((response) => this.productInCart.push(response))
+      this.productService.getProductbyId(cartItem).subscribe((response) => {
+        this.productInCart.push(response),
+          (this.fullAmount += response.price),
+          console.log(response);
+      })
     );
     console.log(this.productInCart);
   }
@@ -63,7 +66,10 @@ export class CarrelloComponent implements OnInit {
     console.log(this.order);
     this.orderService.postOrder(this.order).subscribe();
   }
-  deleteProduct(value:string){
-    this.productInCart = this.productInCart.filter(product => product.productId != value)   
+
+  deleteProduct(value: string) {
+    this.productInCart = this.productInCart.filter(
+      (product) => product.productId != value
+    );
   }
 }

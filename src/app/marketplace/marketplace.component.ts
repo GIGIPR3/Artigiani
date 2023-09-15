@@ -33,4 +33,16 @@ export class MarketplaceComponent implements OnInit {
     console.log(category);
     console.log('cat-prod', this.categoryProducts);
   }
+
+  renderByName(name: string) {
+    if (name.length > 0) {
+      this.productService
+        .getProductbyName(name)
+        .subscribe((product) => (this.allProducts = product));
+    } else {
+      this.productService
+        .getAllProducts()
+        .subscribe((prods) => (this.allProducts = prods));
+    }
+  }
 }

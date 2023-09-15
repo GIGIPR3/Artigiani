@@ -1,5 +1,7 @@
-<app-product-card (deleteCartFromParent)="deleteProduct($event)"
+<button class="btn btn-danger" routerLink="/marketplace">Back</button>
+<app-product-card
+  (deleteCartFromParent)="deleteProduct($event)"
   *ngFor="let product of productInCart"
   [productData]="product"
 ></app-product-card>
-<button (click)="createOrder()">Crea Ordine</button>
+<button (click)="createOrder()">Totale {{ fullAmount }}$</button>

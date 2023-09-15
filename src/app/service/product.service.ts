@@ -39,4 +39,9 @@ export class ProductService {
     const url = `http://localhost:5000/api/getProductById/${productId}`;
     return this.http.get<any>(url);
   }
+
+  getProductbyName(productName: string): Observable<any> {
+    const url = `http://localhost:5000/api/nameStartsWith/${productName}`;
+    return this.http.get<any>(url);
+  }
 }
