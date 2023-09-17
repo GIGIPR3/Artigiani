@@ -1,20 +1,69 @@
 <div class="card productss d-flex align-items-center">
   <h2 class="text-center">{{ productData.name }}</h2>
-  <div class="d-flex justify-content-evenly">
-    <div class="image-thumbnails">
+  <div class="d-flex">
+    <div>
       <img
-        *ngFor="let image of productData.images; let i = index"
-        [src]="'data:image/jpeg;base64,' + image.imageData"
+        [src]="'data:image/jpeg;base64,' + imageToRender"
         alt="Product Image"
-        (click)="showImage(i)"
+        class="big-image rounded overflow-hidden mb-2"
       />
+      <div class="image-thumbnails d-flex rounded overflow-hidden">
+        <img
+          *ngFor="let image of productData.images; let i = index"
+          [src]="'data:image/jpeg;base64,' + image.imageData"
+          alt="Product Image"
+          (click)="showImage(i)"
+          class="small-image rounded overflow-hidden"
+        />
+      </div>
     </div>
-    <div class="d-flex flex-column align-items-center justify-content-center">
-      <p class="text-center">Description: {{ productData.description }}</p>
-      <p>Price: ${{ productData.price }}</p>
-      <p class="text-center">Created At: {{ productData.createdAt }}</p>
-      <p>rating: {{ productData.productRating.toFixed(1) }}</p>
+    <div class="flex-column m-3">
+      <div>
+        <div>
+          <p>{{ productData.description }}</p>
+          <p>{{ productData.price }}$</p>
+          <p>Created At: {{ productData.createdAt }}</p>
+          <p>rating: {{ productData.productRating.toFixed(1) }}</p>
+        </div>
+      </div>
+      <div
+        *ngIf="
+          productData.linkedCategoryId &&
+          productData.linkedCategoryId.length > 0
+        "
+      >
+        <p>Categories:</p>
+        <ul>
+          <li *ngFor="let categoryString of productData.linkedCategoryId">
+            {{ categoryString.split("name: ")[1] }}
+          </li>
+        </ul>
+      </div>
+      <button
+        class="btn btn-success buttons1"
+        (click)="addCart(productData.productId)"
+      >
+        Add Cart
+      </button>
     </div>
+  </div>
+  <button
+    class="btn btn-secondary w-100 s-review"
+    (click)="getReviews(productData.productId)"
+  >
+    Show Reviews
+  </button>
+  <div *ngIf="isRoutterPageCart()">
+    <button
+      (click)="
+        onDeleteFromCart(productData.productId);
+        parentDelete(productData.productId)
+      "
+    >
+      Delete
+    </button>
+  </div>
+  <div *ngIf="showReview">
     <div class="d-flex flex-column align-items-center justify-content-center">
       <div *ngIf="isRouterPageAdmin(); else nonAdminContent">
         <button
@@ -31,36 +80,6 @@
         </button>
       </div>
     </div>
-  </div>
-  <div
-    *ngIf="
-      productData.linkedCategoryId && productData.linkedCategoryId.length > 0
-    "
-  >
-    <p>Categories:</p>
-    <ul>
-      <li *ngFor="let categoryString of productData.linkedCategoryId">
-        {{ categoryString.split("name: ")[1] }}
-      </li>
-    </ul>
-  </div>
-  <button
-    class="mt-4 btn btn-info s-review"
-    (click)="getReviews(productData.productId)"
-  >
-    Show Reviews
-  </button>
-  <div *ngIf="isRoutterPageCart()">
-    <button
-      (click)="
-        onDeleteFromCart(productData.productId);
-        parentDelete(productData.productId)
-      "
-    >
-      Delete
-    </button>
-  </div>
-  <div *ngIf="showReview">
     <tr *ngFor="let review of reviews">
       <td>{{ review.comment }}</td>
       <td>{{ review.rating }}</td>
@@ -84,12 +103,6 @@
       (click)="addDescription(productData.productId)"
     >
       Add Review
-    </button>
-    <button
-      class="btn btn-success buttons1"
-      (click)="addCart(productData.productId)"
-    >
-      Add Cart
     </button>
   </ng-template>
   <div *ngIf="this.modaleVisibile">

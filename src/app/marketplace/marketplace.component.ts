@@ -16,7 +16,9 @@ export class MarketplaceComponent implements OnInit {
   categories: any[] = [];
   allProducts: any[] = [];
   categoryProducts: any[] = [];
+  clickCategory: number = 0;
   clicked: boolean = false;
+  categoryName: string = '';
 
   ngOnInit(): void {
     this.productService
@@ -27,11 +29,16 @@ export class MarketplaceComponent implements OnInit {
       .subscribe((categ) => (this.categories = categ));
   }
 
-  clickedCategory(category: any) {
-    this.clicked = !this.clicked;
-    this.categoryProducts = category.products;
-    console.log(category);
-    console.log('cat-prod', this.categoryProducts);
+  clickedCategory(category: any, iter: number) {
+    if (this.clickCategory === iter) {
+      this.clicked = false;
+      this.clickCategory = -1;
+    } else {
+      this.clicked = true;
+      this.categoryProducts = category.products;
+      this.categoryName = category.name;
+      this.clickCategory = iter;
+    }
   }
 
   renderByName(name: string) {
