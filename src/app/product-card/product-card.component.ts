@@ -28,6 +28,8 @@ export class ProductCardComponent implements OnInit {
   showReview: boolean = false;
   productForm!: FormGroup;
   selectedImages: string[] = [];
+  bigImageIndex: number = 0;
+  imageToRender: string = '';
 
   constructor(
     private router: Router,
@@ -54,6 +56,9 @@ export class ProductCardComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    if (this.productData.images.length > 0) {
+      this.imageToRender = this.productData.images[0].imageData;
+    }
     this.productForm = this.formBuilder.group({
       name: [this.productData.name, Validators.required],
       price: [this.productData.price, [Validators.required, Validators.min(0)]],
@@ -66,7 +71,11 @@ export class ProductCardComponent implements OnInit {
   selectedImageIndex: number | null = null;
 
   showImage(index: number) {
-    this.selectedImageIndex = index;
+    this.bigImageIndex = index;
+
+    console.log(index);
+
+    this.imageToRender = this.productData.images[index].imageData;
   }
 
   isRouterPageAdmin(): boolean {
