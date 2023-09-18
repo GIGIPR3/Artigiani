@@ -1,7 +1,7 @@
 <div class="card productss d-flex align-items-center">
   <h2 class="text-center">{{ productData.name }}</h2>
   <div class="d-flex">
-    <div>
+    <div class="m-2">
       <img
         [src]="'data:image/jpeg;base64,' + imageToRender"
         alt="Product Image"
@@ -17,14 +17,11 @@
         />
       </div>
     </div>
-    <div class="flex-column m-3">
-      <div>
-        <div>
-          <p>{{ productData.description }}</p>
-          <p>{{ productData.price }}$</p>
-          <p>Created At: {{ productData.createdAt }}</p>
-          <p>rating: {{ productData.productRating.toFixed(1) }}</p>
-        </div>
+    <div class="d-flex flex-column">
+      <div class="m">
+        <p>{{ productData.description }}</p>
+        <p>{{ productData.price }}$</p>
+        <p>rating: {{ productData.productRating.toFixed(1) }}</p>
       </div>
       <div
         *ngIf="
@@ -39,47 +36,47 @@
           </li>
         </ul>
       </div>
-      <button
-        class="btn btn-success buttons1"
-        (click)="addCart(productData.productId)"
-      >
-        Add Cart
-      </button>
-    </div>
-  </div>
-  <button
-    class="btn btn-secondary w-100 s-review"
-    (click)="getReviews(productData.productId)"
-  >
-    Show Reviews
-  </button>
-  <div *ngIf="isRoutterPageCart()">
-    <button
-      (click)="
-        onDeleteFromCart(productData.productId);
-        parentDelete(productData.productId)
-      "
-    >
-      Delete
-    </button>
-  </div>
-  <div *ngIf="showReview">
-    <div class="d-flex flex-column align-items-center justify-content-center">
-      <div *ngIf="isRouterPageAdmin(); else nonAdminContent">
-        <button
-          class="btn btn-warning buttons1 mb-2"
-          (click)="visualizzaModale()"
-        >
+
+      <div *ngIf="isRouterPageAdmin(); else nonAdminContent" class="mb-2">
+        <button class="btn btn-warning" (click)="visualizzaModale()">
           Modifica
         </button>
         <button
           (click)="onDelete(productData.productId)"
-          class="btn buttons2 btn-danger"
+          class="btn btn-danger"
         >
           Elimina
         </button>
       </div>
+
+      <button
+        *ngIf="!isRoutterPageCart()"
+        class="btn btn-success"
+        (click)="addCart(productData.productId)"
+      >
+        Add Cart
+      </button>
+      <div *ngIf="isRoutterPageCart()">
+        <button
+          class="btn btn-danger mt-2"
+          (click)="
+            onDeleteFromCart(productData.productId);
+            parentDelete(productData.productId)
+          "
+        >
+          Remove from cart
+        </button>
+      </div>
     </div>
+  </div>
+  <button
+    class="mt-4 btn btn-secondary w-100"
+    (click)="getReviews(productData.productId)"
+  >
+    Show Reviews
+  </button>
+
+  <div *ngIf="showReview">
     <tr *ngFor="let review of reviews">
       <td>{{ review.comment }}</td>
       <td>{{ review.rating }}</td>

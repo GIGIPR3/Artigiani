@@ -33,7 +33,6 @@ export class CarrelloComponent implements OnInit {
 
   ngOnInit(): void {
     const userJson = this.loggedUserService.getUser();
-    console.log(userJson);
 
     if (userJson) {
       this.user = JSON.parse(userJson);
