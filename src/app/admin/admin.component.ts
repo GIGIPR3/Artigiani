@@ -40,7 +40,7 @@ export class AdminComponent implements OnInit {
       userId: [''],
     });
     this.http
-      .get<string[]>('http://localhost:8081/api/categories')
+      .get<string[]>('http://ec2-34-241-199-99.eu-west-1.compute.amazonaws.com:8081/api/categories')
       .subscribe((data) => {
         console.log('data:', data);
         this.categories = data;

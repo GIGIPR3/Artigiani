@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class OrdersService {
-  private baseUrl = 'http://localhost:8081/api/ordini';
+  private baseUrl = 'http://ec2-34-241-199-99.eu-west-1.compute.amazonaws.com:8081/api/ordini';
 
   constructor(private http: HttpClient) {}
 
