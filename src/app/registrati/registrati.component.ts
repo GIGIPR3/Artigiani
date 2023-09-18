@@ -31,7 +31,7 @@ export class RegistratiComponent {
       console.log(bodyData);
 
       this.http
-        .post('http://localhost:5000/api/user/save', bodyData)
+        .post('http://localhost:8081/api/user/save', bodyData)
         .pipe(
           catchError((error) => {
             console.error('Error:', error);

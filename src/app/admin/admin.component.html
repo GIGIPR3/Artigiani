@@ -1,7 +1,9 @@
 <div class="koulen container oscura">
   <nav class="d-flex align-items-center justify-content-between pt-2">
     <button class="btn btn-danger" routerLink="">Back</button>
-    <div class="saluti fs-3"><span>👋</span>Ciao artigiano {{ user!.email }}</div>
+    <div class="saluti fs-3">
+      <span>👋</span>Ciao artigiano {{ user!.email }}
+    </div>
     <div class="icona">
       <i class="fa-solid fa-circle-user"></i>
     </div>
@@ -93,8 +95,14 @@
         </div>
       </form>
     </div>
-    <div class="products fs-4 d-flex align-items-center justify-content-center my-2">Products</div>
-    <div class="card-container cards mt-2 d-flex justify-content-evenly align-items-center flex-wrap">
+    <div
+      class="products fs-4 d-flex align-items-center justify-content-center my-2"
+    >
+      Products
+    </div>
+    <div
+      class="card-container cards mt-2 d-flex justify-content-evenly align-items-center flex-wrap"
+    >
       <app-product-card
         *ngFor="let product of products"
         [productData]="product"

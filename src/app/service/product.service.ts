@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:5000/api/products';
-  private deleteApiUrl = 'http://localhost:5000/api/product';
+  private apiUrl = 'http://localhost:8081/api/products';
+  private deleteApiUrl = 'http://localhost:8081/api/product';
 
   constructor(private http: HttpClient) {}
 
@@ -36,12 +36,12 @@ export class ProductService {
   }
 
   getProductbyId(productId: string): Observable<any> {
-    const url = `http://localhost:5000/api/getProductById/${productId}`;
+    const url = `http://localhost:8081/api/getProductById/${productId}`;
     return this.http.get<any>(url);
   }
 
   getProductbyName(productName: string): Observable<any> {
-    const url = `http://localhost:5000/api/nameStartsWith/${productName}`;
+    const url = `http://localhost:8081/api/nameStartsWith/${productName}`;
     return this.http.get<any>(url);
   }
 
