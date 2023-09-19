@@ -40,7 +40,9 @@ export class AdminComponent implements OnInit {
       userId: [''],
     });
     this.http
-      .get<string[]>('http://ec2-34-241-199-99.eu-west-1.compute.amazonaws.com:8081/api/categories')
+      .get<string[]>(
+        'http://ec2-34-241-199-99.eu-west-1.compute.amazonaws.com:8081/api/categories'
+      )
       .subscribe((data) => {
         console.log('data:', data);
         this.categories = data;
@@ -94,7 +96,39 @@ export class AdminComponent implements OnInit {
   @ViewChild('filePicker') filePicker!: ElementRef;
   selectedImage: string | null = null;
 
-  onImagePicked(event: Event) {
+  // onImagePicked(event: Event) {
+  //   const fileInput = event.target as HTMLInputElement;
+  //   const files = fileInput.files;
+
+  //   if (files) {
+  //     const imagesArray = this.productForm.get('images') as FormArray;
+  //     imagesArray.clear();
+
+  //     this.selectedImages = [];
+
+  //     for (let i = 0; i < files.length; i++) {
+  //       const file = files[i];
+
+  //       const reader = new FileReader();
+  //       reader.onload = (e: any) => {
+  //         console.log(e.target.result.split(',')[1]);
+
+  //         imagesArray.push(
+  //           this.formBuilder.control(e.target.result.split(',')[1])
+  //         );
+  //         this.selectedImages.push(e.target.result);
+  //       };
+
+  //       reader.readAsDataURL(file);
+  //     }
+  //   } else {
+  //     this.selectedImages = [];
+  //     const imagesArray = this.productForm.get('images') as FormArray;
+  //     imagesArray.clear();
+  //   }
+  // }
+
+  async onImagePicked(event: Event, maxWidth: number, maxHeight: number) {
     const fileInput = event.target as HTMLInputElement;
     const files = fileInput.files;
 
@@ -107,21 +141,54 @@ export class AdminComponent implements OnInit {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
 
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          imagesArray.push(
-            this.formBuilder.control(e.target.result.split(',')[1])
-          );
-          this.selectedImages.push(e.target.result);
-        };
+        const resizedImage = await this.resizeImage(file, maxWidth, maxHeight);
 
-        reader.readAsDataURL(file);
+        imagesArray.push(this.formBuilder.control(resizedImage.split(',')[1]));
+        this.selectedImages.push(resizedImage);
       }
     } else {
       this.selectedImages = [];
       const imagesArray = this.productForm.get('images') as FormArray;
       imagesArray.clear();
     }
+  }
+
+  async resizeImage(
+    file: File,
+    maxWidth: number,
+    maxHeight: number
+  ): Promise<string> {
+    return new Promise<string>((resolve) => {
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
+
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let newWidth = img.width;
+        let newHeight = img.height;
+
+        if (img.width > maxWidth) {
+          newWidth = maxWidth;
+          newHeight = (img.height * maxWidth) / img.width;
+        }
+
+        if (newHeight > maxHeight) {
+          newHeight = maxHeight;
+          newWidth = (img.width * maxHeight) / img.height;
+        }
+
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+
+        ctx!.drawImage(img, 0, 0, newWidth, newHeight);
+
+        const resizedImageData = canvas.toDataURL();
+
+        resolve(resizedImageData);
+      };
+    });
   }
 
   onCheckChange(event: any) {
@@ -140,6 +207,8 @@ export class AdminComponent implements OnInit {
           imagesArray.push(this.formBuilder.control(event.target.value));
           console.log(event.target.value);
           formArray.removeAt(i);
+          console.log(this.productForm);
+
           return;
         }
         i++;
