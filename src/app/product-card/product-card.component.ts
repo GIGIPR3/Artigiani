@@ -30,6 +30,7 @@ export class ProductCardComponent implements OnInit {
   selectedImages: string[] = [];
   bigImageIndex: number = 0;
   imageToRender: string = '';
+  showComponent = true;
 
   constructor(
     private router: Router,
@@ -87,9 +88,8 @@ export class ProductCardComponent implements OnInit {
   }
 
   onDelete(productId: string) {
-    this.productService.deleteProduct(productId).subscribe(() => {
-      window.location.reload();
-    });
+    this.productService.deleteProduct(productId).subscribe(() => {});
+    this.showComponent = false;
   }
 
   onDeleteFromCart(productId: string) {
@@ -99,6 +99,7 @@ export class ProductCardComponent implements OnInit {
     console.log('delete product from cookies');
 
     this.cartService.updateCartCookies();
+    this.showComponent = false;
   }
 
   addDescription(productId: string) {

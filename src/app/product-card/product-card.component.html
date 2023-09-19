@@ -1,169 +1,175 @@
-<div class="card productss d-flex align-items-center">
-  <h2 class="text-center">{{ productData.name }}</h2>
-  <div class="d-flex">
-    <div class="m-2">
-      <img
-        [src]="'data:image/jpeg;base64,' + imageToRender"
-        alt="Product Image"
-        class="big-image rounded overflow-hidden mb-2"
-      />
-      <div class="image-thumbnails d-flex rounded overflow-hidden">
-        <img
-          *ngFor="let image of productData.images; let i = index"
-          [src]="'data:image/jpeg;base64,' + image.imageData"
-          alt="Product Image"
-          (click)="showImage(i)"
-          class="small-image rounded overflow-hidden"
-        />
-      </div>
-    </div>
-    <div class="d-flex flex-column">
-      <div class="m">
-        <p>{{ productData.description }}</p>
-        <p>{{ productData.price }}$</p>
-        <p>rating: {{ productData.productRating.toFixed(1) }}</p>
-      </div>
-      <div
-        *ngIf="
-          productData.linkedCategoryId &&
-          productData.linkedCategoryId.length > 0
-        "
-      >
-        <p>Categories:</p>
-        <ul>
-          <li *ngFor="let categoryString of productData.linkedCategoryId">
-            {{ categoryString.split("name: ")[1] }}
-          </li>
-        </ul>
-      </div>
-
-      <div *ngIf="isRouterPageAdmin(); else nonAdminContent" class="mb-2">
-        <button class="btn btn-warning" (click)="visualizzaModale()">
-          Modifica
-        </button>
-        <button
-          (click)="onDelete(productData.productId)"
-          class="btn btn-danger"
-        >
-          Elimina
-        </button>
-      </div>
-
-      <button
-        *ngIf="!isRoutterPageCart()"
-        class="btn btn-success"
-        (click)="addCart(productData.productId)"
-      >
-        Add Cart
-      </button>
-      <div *ngIf="isRoutterPageCart()">
-        <button
-          class="btn btn-danger mt-2"
-          (click)="
-            onDeleteFromCart(productData.productId);
-            parentDelete(productData.productId)
-          "
-        >
-          Remove from cart
-        </button>
-      </div>
-    </div>
-  </div>
-  <button
-    class="mt-4 btn btn-secondary w-100"
-    (click)="getReviews(productData.productId)"
-  >
-    Show Reviews
-  </button>
-
-  <div *ngIf="showReview">
-    <tr *ngFor="let review of reviews">
-      <td>{{ review.comment }}</td>
-      <td>{{ review.rating }}</td>
-    </tr>
-  </div>
-
-  <ng-template #nonAdminContent>
-    <div
-      class="d-flex flex-column align-items-center justify-content-center mb-2"
-      [formGroup]="descriptionForm"
-    >
-      <input formControlName="comment" placeholder="Review" />
-      <input
-        formControlName="rating"
-        type="number"
-        placeholder="Rating from 1-10"
-      />
-    </div>
-    <button
-      class="btn btn-primary mb-2 buttons1"
-      (click)="addDescription(productData.productId)"
-    >
-      Add Review
-    </button>
-  </ng-template>
-  <div *ngIf="this.modaleVisibile">
-    <form
-      [formGroup]="productForm"
-      (ngSubmit)="onSubmit(productData.productId)"
-      enctype="multipart/form-data"
-    >
-      <div class="mt-5">
-        <input
-          type="text"
-          placeholder="Nome del Prodotto"
-          class="titolo"
-          formControlName="name"
-        />
-        <input
-          type="text"
-          placeholder="Descrizione del Prodotto"
-          class="description"
-          formControlName="description"
-        />
-      </div>
-      <div class="mt-3 nunito">
-        Inserisci immagine:
-        <br />
-        <input
-          type="file"
-          #filePicker
-          (change)="onImagePicked($event)"
-          accept="image/*"
-          multiple
-        />
-        <div class="selected-images">
+<ng-container *ngIf="showComponent">
+  <div class="card productss">
+    <h2>{{ productData.name }}</h2>
+    <div class="d-flex justify-content-between">
+      <div>
+        <div class="m-2">
           <img
-            *ngFor="let image of selectedImages"
-            [src]="image"
-            alt="Selected Image"
+            [src]="'data:image/jpeg;base64,' + imageToRender"
+            alt="Product Image"
+            class="big-image rounded overflow-hidden mb-2"
           />
-        </div>
-        <div class="mt-5">
-          <div class="mt-5 d-flex justify-content-end">
-            <label for=""
-              >Inserisci prezzo
-              <input
-                type="text"
-                class="prezzo"
-                placeholder="Prezzo"
-                formControlName="price"
-            /></label>
+          <div class="image-thumbnails d-flex rounded overflow-hidden">
+            <img
+              *ngFor="let image of productData.images; let i = index"
+              [src]="'data:image/jpeg;base64,' + image.imageData"
+              alt="Product Image"
+              (click)="showImage(i)"
+              class="small-image rounded overflow-hidden"
+            />
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-center pb-3 mt-4 gap-4">
-        <button type="submit" class="btn btn-success">
-          <i class="fa-solid fa-cloud-arrow-up"></i> Submit
-        </button>
-        <button
-          type="button"
-          class="btn btn-danger"
-          (click)="visualizzaModale()"
-        >
-          <i class="fa-solid fa-xmark"></i> Cancel
-        </button>
+      <div>
+        <div class="d-flex flex-column">
+          <div class="m">
+            <p>{{ productData.description }}</p>
+            <p>{{ productData.price }}$</p>
+            <p>rating: {{ productData.productRating.toFixed(1) }}</p>
+          </div>
+          <div
+            *ngIf="
+              productData.linkedCategoryId &&
+              productData.linkedCategoryId.length > 0
+            "
+          >
+            <p>Categories:</p>
+            <ul>
+              <li *ngFor="let categoryString of productData.linkedCategoryId">
+                {{ categoryString.split("name: ")[1] }}
+              </li>
+            </ul>
+          </div>
+
+          <div *ngIf="isRouterPageAdmin(); else nonAdminContent" class="mb-2">
+            <button class="btn btn-warning" (click)="visualizzaModale()">
+              Modifica
+            </button>
+            <button
+              (click)="onDelete(productData.productId)"
+              class="btn btn-danger"
+            >
+              Elimina
+            </button>
+          </div>
+
+          <button
+            *ngIf="!isRoutterPageCart()"
+            class="btn btn-success"
+            (click)="addCart(productData.productId)"
+          >
+            Add Cart
+          </button>
+          <div *ngIf="isRoutterPageCart()">
+            <button
+              class="btn btn-danger mt-2"
+              (click)="
+                onDeleteFromCart(productData.productId);
+                parentDelete(productData.productId)
+              "
+            >
+              Remove from cart
+            </button>
+          </div>
+        </div>
       </div>
-    </form>
+    </div>
+    <button
+      class="mt-4 btn btn-secondary w-100"
+      (click)="getReviews(productData.productId)"
+    >
+      Show Reviews
+    </button>
+
+    <div *ngIf="showReview">
+      <tr *ngFor="let review of reviews">
+        <td>{{ review.comment }}</td>
+        <td>{{ review.rating }}</td>
+      </tr>
+    </div>
+
+    <ng-template #nonAdminContent>
+      <div
+        class="d-flex flex-column align-items-center justify-content-center mb-2"
+        [formGroup]="descriptionForm"
+      >
+        <input formControlName="comment" placeholder="Review" />
+        <input
+          formControlName="rating"
+          type="number"
+          placeholder="Rating from 1-10"
+        />
+      </div>
+      <button
+        class="btn btn-primary mb-2 buttons1"
+        (click)="addDescription(productData.productId)"
+      >
+        Add Review
+      </button>
+    </ng-template>
+    <div *ngIf="this.modaleVisibile">
+      <form
+        [formGroup]="productForm"
+        (ngSubmit)="onSubmit(productData.productId)"
+        enctype="multipart/form-data"
+      >
+        <div class="mt-5">
+          <input
+            type="text"
+            placeholder="Nome del Prodotto"
+            class="titolo"
+            formControlName="name"
+          />
+          <input
+            type="text"
+            placeholder="Descrizione del Prodotto"
+            class="description"
+            formControlName="description"
+          />
+        </div>
+        <div class="mt-3 nunito">
+          Inserisci immagine:
+          <br />
+          <input
+            type="file"
+            #filePicker
+            (change)="onImagePicked($event)"
+            accept="image/*"
+            multiple
+          />
+          <div class="selected-images">
+            <img
+              *ngFor="let image of selectedImages"
+              [src]="image"
+              alt="Selected Image"
+            />
+          </div>
+          <div class="mt-5">
+            <div class="mt-5 d-flex justify-content-end">
+              <label for=""
+                >Inserisci prezzo
+                <input
+                  type="text"
+                  class="prezzo"
+                  placeholder="Prezzo"
+                  formControlName="price"
+              /></label>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center pb-3 mt-4 gap-4">
+          <button type="submit" class="btn btn-success">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Submit
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="visualizzaModale()"
+          >
+            <i class="fa-solid fa-xmark"></i> Cancel
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
+</ng-container>
