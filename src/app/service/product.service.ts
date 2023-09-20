@@ -6,8 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ProductService {
-  private apiUrl = 'http://ec2-34-241-199-99.eu-west-1.compute.amazonaws.com:8081/api/products';
-  private deleteApiUrl = 'http://ec2-34-241-199-99.eu-west-1.compute.amazonaws.com:8081/api/product';
+  private apiUrl =
+    'http://ec2-54-216-114-29.eu-west-1.compute.amazonaws.com:8082/api/products';
+  private deleteApiUrl =
+    'http://ec2-54-216-114-29.eu-west-1.compute.amazonaws.com:8082/api/product';
 
   constructor(private http: HttpClient) {}
 
@@ -36,12 +38,12 @@ export class ProductService {
   }
 
   getProductbyId(productId: string): Observable<any> {
-    const url = `http://ec2-34-241-199-99.eu-west-1.compute.amazonaws.com:8081/api/getProductById/${productId}`;
+    const url = `http://ec2-54-216-114-29.eu-west-1.compute.amazonaws.com:8082/api/getProductById/${productId}`;
     return this.http.get<any>(url);
   }
 
   getProductbyName(productName: string): Observable<any> {
-    const url = `http://ec2-34-241-199-99.eu-west-1.compute.amazonaws.com:8081/api/nameStartsWith/${productName}`;
+    const url = `http://ec2-54-216-114-29.eu-west-1.compute.amazonaws.com:8082/api/nameStartsWith/${productName}`;
     return this.http.get<any>(url);
   }
 

@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ReviewService {
-  private apiUrl = 'http://ec2-34-241-199-99.eu-west-1.compute.amazonaws.com:8081/api/review';
+  private apiUrl =
+    'http://ec2-54-216-114-29.eu-west-1.compute.amazonaws.com:8082/api/review';
   constructor(private http: HttpClient) {}
 
   postReview(reviewData: any): Observable<any> {

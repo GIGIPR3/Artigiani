@@ -31,7 +31,10 @@ export class RegistratiComponent {
       console.log(bodyData);
 
       this.http
-        .post('http://ec2-34-241-199-99.eu-west-1.compute.amazonaws.com:8081/api/user/save', bodyData)
+        .post(
+          'http://ec2-54-216-114-29.eu-west-1.compute.amazonaws.com:8082/api/user/save',
+          bodyData
+        )
         .pipe(
           catchError((error) => {
             console.error('Error:', error);

@@ -32,7 +32,10 @@ export class LoginComponent implements OnInit {
   Login() {
     console.log(this.loginForm.value.email);
     this.http
-      .post('http://ec2-34-241-199-99.eu-west-1.compute.amazonaws.com:8081/api/user/login', this.loginForm.value)
+      .post(
+        'http://ec2-54-216-114-29.eu-west-1.compute.amazonaws.com:8082/api/user/login',
+        this.loginForm.value
+      )
       .subscribe((resultData: any) => {
         console.log(resultData);
 
@@ -43,7 +46,7 @@ export class LoginComponent implements OnInit {
           console.log(resultData);
           this.http
             .get<User>(
-              `http://ec2-34-241-199-99.eu-west-1.compute.amazonaws.com:8081/api/user/getByEmail/${this.loginForm.value.email}`
+              `http://ec2-54-216-114-29.eu-west-1.compute.amazonaws.com:8082/api/user/getByEmail/${this.loginForm.value.email}`
             )
             .subscribe({
               next: (res: User) => {
