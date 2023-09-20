@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class CategoryService {
   private baseUrl =
-    'http://ec2-54-216-114-29.eu-west-1.compute.amazonaws.com:8082/api/categories';
+    'http://ec2-54-216-114-29.eu-west-1.compute.amazonaws.com:8081/api/categories';
 
   constructor(private http: HttpClient) {}
 

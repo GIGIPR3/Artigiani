@@ -32,7 +32,7 @@ export class RegistratiComponent {
 
       this.http
         .post(
-          'http://ec2-54-216-114-29.eu-west-1.compute.amazonaws.com:8082/api/user/save',
+          'http://ec2-54-216-114-29.eu-west-1.compute.amazonaws.com:8081/api/user/save',
           bodyData
         )
         .pipe(
