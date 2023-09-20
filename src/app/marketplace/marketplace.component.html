@@ -54,22 +54,22 @@
           Recommended Products
         </div>
       </div>
-      <div class="container">
-        <div class="gap-4 row">
-          <ng-container *ngIf="!clicked; else categoryProductsSection">
-            <app-product-card
-              *ngFor="let product of allProducts"
-              [productData]="product"
-              class="col-sm"
-            ></app-product-card>
-          </ng-container>
-          <ng-template #categoryProductsSection>
-            <app-product-card
-              *ngFor="let product of categoryProducts"
-              [productData]="product"
-            ></app-product-card>
-          </ng-template>
-        </div>
+
+      <div class="row">
+        <ng-container *ngIf="!clicked; else categoryProductsSection">
+          <app-product-card
+            *ngFor="let product of allProducts"
+            [productData]="product"
+            class="col-sm"
+          ></app-product-card>
+        </ng-container>
+        <ng-template #categoryProductsSection>
+          <app-product-card
+            *ngFor="let product of categoryProducts"
+            [productData]="product"
+            class="col-sm"
+          ></app-product-card>
+        </ng-template>
       </div>
     </div>
   </main>

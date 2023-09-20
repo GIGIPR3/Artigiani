@@ -1,10 +1,10 @@
-
-FROM node:latest AS build
+FROM node:latest as build
 WORKDIR /app
+RUN npm cache clean --force
 COPY . .
 RUN npm install
-RUN npm run build
+RUN npm run build --prod
+FROM trion/nginx-angular:latest AS ngi
 
-FROM nginx:latest
-COPY --from=build /app /usr/share/nginx/html
-EXPOSE 8082
+COPY --from=build /app/dist/artigiani /usr/share/nginx/html
+EXPOSE 8080
